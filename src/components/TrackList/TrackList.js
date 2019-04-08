@@ -30,7 +30,7 @@ export class TrackList extends React.Component {
     return (
       <div className="TrackList">
         {tracks.map(track => {
-          return <Track track={track} actionButton={this.getActionButton(type)} getId={this.handleId} />;
+          return <Track key={track.id} track={track} actionButton={this.getActionButton(type)} getId={this.handleId} />;
         })}
       </div>
     );

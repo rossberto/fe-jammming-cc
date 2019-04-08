@@ -10,7 +10,7 @@ export class Playlist extends React.Component {
   }
 
   handleUpdateList(id) {
-    this.props.remove(id);
+    this.props.remove(id, '-');
   }
 
   render() {
