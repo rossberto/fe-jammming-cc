@@ -10,17 +10,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hash: '',
       results: [],
-      playlist: []
+      playlist: [],
+      auth: false,
+      token: ''
     }
 
     this.searchSpotify = this.searchSpotify.bind(this);
     this.edit = this.edit.bind(this);
-  }
-
-  getHash() {
-    return window.location.hash;
   }
 
   searchSpotify(term, token) {
@@ -56,12 +53,33 @@ class App extends Component {
     }
   }
 
+  handleLogin() {
+    Spotify.auth();
+  }
+
+  componentDidMount() {
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      const token = hash.split('&')[0].slice(14);
+
+      this.setState({
+        auth: true,
+        token: token
+      });
+    }
+  }
+
   render() {
+    const credentials = {
+      auth: this.state.auth,
+      token: this.state.token
+    }
+
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar hash={this.getHash()} searchSpotify={this.searchSpotify} />
+          <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} />
           <AppPlaylist results={this.state.results} playlist={this.state.playlist} edit={this.edit} />
         </div>
       </div>
