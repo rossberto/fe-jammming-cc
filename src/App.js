@@ -13,11 +13,13 @@ class App extends Component {
       results: [],
       playlist: [],
       auth: false,
-      token: ''
+      token: '',
+      userId: ''
     }
 
     this.searchSpotify = this.searchSpotify.bind(this);
     this.edit = this.edit.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   searchSpotify(term, token) {
@@ -57,6 +59,16 @@ class App extends Component {
     Spotify.auth();
   }
 
+  handleSave(name) {
+    Spotify.getUserId(this.state.token).then(userId => {
+      Spotify.createPlaylist(name, this.state.token, userId).then(playlistId => {
+        Spotify.addToPlaylist(playlistId, this.state.token, this.state.playlist).then(
+          this.setState({playlist: []})
+        );
+      });
+    });
+  }
+
   componentDidMount() {
     if (window.location.hash) {
       const hash = window.location.hash;
@@ -80,7 +92,7 @@ class App extends Component {
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
           <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} />
-          <AppPlaylist results={this.state.results} playlist={this.state.playlist} edit={this.edit} />
+          <AppPlaylist results={this.state.results} playlist={this.state.playlist} edit={this.edit} save={this.handleSave} />
         </div>
       </div>
     );

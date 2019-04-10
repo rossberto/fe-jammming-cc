@@ -8,7 +8,7 @@ export class AppPlaylist extends React.Component {
     return (
       <div className="App-playlist">
         <SearchResults tracks={this.props.results} add={this.props.edit}/>
-        <Playlist tracks={this.props.playlist} remove={this.props.edit} />
+        <Playlist tracks={this.props.playlist} remove={this.props.edit} save={this.props.save} />
       </div>
     );
   }

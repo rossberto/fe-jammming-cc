@@ -10,7 +10,6 @@ export class TrackList extends React.Component {
 
   getActionButton(type) {
     if (type === 'results') {
-      console.log(this.props.edition);
       return '+';
     } else if (type === 'playlist') {
       return '-';

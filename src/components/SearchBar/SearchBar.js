@@ -1,7 +1,5 @@
 import React from 'react';
 
-//import {Spotify} from '../../util/Spotify';
-
 export class SearchBar extends React.Component {
   constructor(props) {
     super(props);
@@ -19,11 +17,15 @@ export class SearchBar extends React.Component {
   }
 
   handleClick() {
+    // Check if authorized
     if (this.props.auth.auth) {
+      // Authorized
+      // Request a Spotify sarch
       const token = this.props.auth.token;
       this.props.searchSpotify(this.state.term, token);
     } else {
-      // Request authorization
+      // Non Authorized
+      // Request Login
       this.props.login();
     }
   }
@@ -31,7 +33,7 @@ export class SearchBar extends React.Component {
   render() {
     return (
       <div className="SearchBar">
-        <input onChange={this.handleTermChange} placeholder="Enter A Song Title" />
+        <input onChange={this.handleTermChange} placeholder="Enter A Song, Album, or Artist" />
         <a onClick={this.handleClick}>SEARCH</a>
       </div>
     );
