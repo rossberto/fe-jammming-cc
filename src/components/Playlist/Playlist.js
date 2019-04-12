@@ -6,7 +6,7 @@ export class Playlist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      playlistName: ''
+      playlistName: 'New Playlist'
     }
 
     this.handleUpdateList = this.handleUpdateList.bind(this);
@@ -36,7 +36,7 @@ export class Playlist extends React.Component {
   render() {
     return (
       <div className="Playlist">
-        <input onChange={this.handleChange} placeholder='New Playlist' />
+        <input onChange={this.handleChange} placeholder="Playlist Name" value={this.state.playlistName} />
         <TrackList type="playlist" tracks={this.props.tracks} updateList={this.handleUpdateList} />
         <a onClick={this.handleClick} className="Playlist-save">SAVE TO SPOTIFY</a>
       </div>

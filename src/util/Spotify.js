@@ -33,7 +33,6 @@ export const Spotify = {
     return fetch(urlToFetch, headerToFetch).then(response => {
       return response.json();
     }).then(jsonResponse => {
-      console.log(jsonResponse);
       return jsonResponse.tracks.items.map(item => {
         return {
           id: item.id,
@@ -99,9 +98,9 @@ export const Spotify = {
     }
 
     return fetch(urlToFetch,headerToFetch).then(response => {
-      return response.json();
-    }).then(jsonResponse => {
-      console.log(jsonResponse);
+      if (response.ok) {
+        alert('Playlist saved succesfuly!');
+      }
     });
   }
 }

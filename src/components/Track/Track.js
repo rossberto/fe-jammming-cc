@@ -4,12 +4,6 @@ export class Track extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      trackName: '',
-      trackArtist: '',
-      trackAlbum: ''
-    }
-
     this.handleClick = this.handleClick.bind(this);
   }
 

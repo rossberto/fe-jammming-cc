@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 import {SearchBar} from './components/SearchBar/SearchBar';
-import {AppPlaylist} from './components/AppPlaylist/AppPlaylist';
+import {SearchResults} from './components/SearchResults/SearchResults';
+import {Playlist} from './components/Playlist/Playlist';
 
 import {Spotify} from './util/Spotify';
 
@@ -13,8 +14,7 @@ class App extends Component {
       results: [],
       playlist: [],
       auth: false,
-      token: '',
-      userId: ''
+      token: ''
     }
 
     this.searchSpotify = this.searchSpotify.bind(this);
@@ -24,8 +24,9 @@ class App extends Component {
 
   searchSpotify(term, token) {
     Spotify.search(term, token).then(tracks => {
+      window.location.hash = '';
       this.setState({results: tracks});
-    })
+    });
   }
 
   removeFromPlaylist(id) {
@@ -69,7 +70,7 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (window.location.hash) {
       const hash = window.location.hash;
       const token = hash.split('&')[0].slice(14);
@@ -92,7 +93,10 @@ class App extends Component {
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
           <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} />
-          <AppPlaylist results={this.state.results} playlist={this.state.playlist} edit={this.edit} save={this.handleSave} />
+          <div className="App-playlist">
+            <SearchResults tracks={this.state.results} add={this.edit}/>
+            <Playlist tracks={this.state.playlist} remove={this.edit} save={this.handleSave} />
+          </div>
         </div>
       </div>
     );
