@@ -122,5 +122,39 @@ export const Spotify = {
     }).then(jsonResponse => {
       return jsonResponse;
     })
+  },
+
+  getPlaylistTracks(token, id) {
+    let urlToFetch = `https://api.spotify.com/v1/playlists/${id}/tracks`;
+
+    const headerToFetch = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return fetch(urlToFetch, headerToFetch).then(response => {
+      return response.json();
+    }).then(jsonResponse => {
+      return jsonResponse.items.map(item => {
+        return {
+          id: item.track.id,
+          name: item.track.name,
+          album: item.track.album.name,
+          artist: item.track.artists[0].name,
+          uri: item.track.uri
+        }
+      });
+    })
   }
 }
+
+/*
+id: item.id,
+name: item.name,
+album: item.album.name,
+artist: item.artists[0].name,
+uri: item.uri
+*/

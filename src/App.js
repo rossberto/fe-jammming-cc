@@ -24,6 +24,7 @@ class App extends Component {
     this.edit = this.edit.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.getPlaylistTracks = this.getPlaylistTracks.bind(this);
   }
 
   searchSpotify(term, token) {
@@ -32,9 +33,7 @@ class App extends Component {
       this.setState({results: tracks});
     }).then(
       Spotify.getPlaylists(this.state.token).then(jsonResponse => {
-        console.log('Pidiendo playlists');
         this.setState({userPlaylists: jsonResponse.items});
-        console.log(this.state.userPlaylists);
       })
     );
   }
@@ -80,6 +79,12 @@ class App extends Component {
     });
   }
 
+  getPlaylistTracks(id) {
+    Spotify.getPlaylistTracks(this.state.token, id).then(tracks => {
+      this.setState({results: tracks})
+    });
+  }
+
   componentWillMount() {
     if (window.location.hash) {
       const hash = window.location.hash;
@@ -104,7 +109,7 @@ class App extends Component {
         <div className="App">
           <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} />
           <div className="App-playlist">
-            <PlaylistsResults userPlaylists={this.state.userPlaylists} />
+            <PlaylistsResults userPlaylists={this.state.userPlaylists} getTracks={this.getPlaylistTracks} />
             <SearchResults tracks={this.state.results} add={this.edit} />
             <Playlist tracks={this.state.playlist} remove={this.edit} save={this.handleSave} />
           </div>

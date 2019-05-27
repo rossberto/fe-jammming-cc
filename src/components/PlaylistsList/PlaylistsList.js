@@ -31,8 +31,7 @@ export class PlaylistsList extends React.Component {
         <div className="flex-playlists">
           {
             playlists.map(playlist => {
-              console.log(playlist);
-              return <PlaylistOption name="playlists" value={playlist.id} displayName={playlist.name} />;
+              return <PlaylistOption name="playlists" key={playlist.id} value={playlist.id} displayName={playlist.name} getTracks={this.props.getTracks} />;
             })
           }
         </div>
