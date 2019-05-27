@@ -97,10 +97,30 @@ export const Spotify = {
       }
     }
 
-    return fetch(urlToFetch,headerToFetch).then(response => {
+    return fetch(urlToFetch, headerToFetch).then(response => {
       if (response.ok) {
         alert('Playlist saved succesfuly!');
       }
     });
+  },
+
+  getPlaylists(token) {
+    let urlToFetch = `https://api.spotify.com/v1/me/playlists`;
+
+    const headerToFetch = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return fetch(urlToFetch, headerToFetch).then(response => {
+      //if (response.ok) {
+        return response.json();
+      //}
+    }).then(jsonResponse => {
+      return jsonResponse;
+    })
   }
 }

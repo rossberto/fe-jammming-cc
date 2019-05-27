@@ -2,10 +2,11 @@ import React from 'react';
 
 import {TrackList} from '../TrackList/TrackList';
 
+
 export class SearchResults extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.handleUpdate = this.handleUpdate.bind(this);
   }
 
