@@ -16,7 +16,8 @@ export class SearchBar extends React.Component {
     this.setState({term: newTerm});
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
     // Check if authorized
     if (this.props.auth.auth) {
       // Authorized
@@ -32,10 +33,10 @@ export class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="SearchBar">
+      <form onSubmit={this.handleClick} className="SearchBar">
         <input onChange={this.handleTermChange} placeholder="Enter A Song, Album, or Artist" />
         <a onClick={this.handleClick}>SEARCH</a>
-      </div>
+      </form>
     );
   }
 }

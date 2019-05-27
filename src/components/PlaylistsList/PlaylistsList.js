@@ -23,15 +23,21 @@ export class PlaylistsList extends React.Component {
     this.props.getPlaylists();
   }
 
+  handleChange(e) {
+    console.log(e);
+    console.log("Hola");
+  }
+
   render() {
     const playlists = this.props.userPlaylists;
 
     return (
       <div>
+        <br />
         <div className="flex-playlists">
           {
             playlists.map(playlist => {
-              return <PlaylistOption name="playlists" key={playlist.id} value={playlist.id} displayName={playlist.name} getTracks={this.props.getTracks} />;
+              return <PlaylistOption checkBox={this.props.checkBox} name={playlist.name} key={playlist.id} value={playlist.id} displayName={playlist.name} getTracks={this.props.getTracks} />;
             })
           }
         </div>

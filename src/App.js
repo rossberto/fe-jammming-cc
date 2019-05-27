@@ -24,7 +24,9 @@ class App extends Component {
     this.edit = this.edit.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.getPlaylists = this.getPlaylists.bind(this);
     this.getPlaylistTracks = this.getPlaylistTracks.bind(this);
+    this.handleCheckBox = this.handleCheckBox.bind(this);
   }
 
   searchSpotify(term, token) {
@@ -79,10 +81,33 @@ class App extends Component {
     });
   }
 
+  getPlaylists() {
+    if (this.state.token !== '') {
+      Spotify.getPlaylists(this.state.token).then(jsonResponse => {
+        this.setState({userPlaylists: jsonResponse.items});
+      })
+    } else {
+      Spotify.auth();
+    }
+  }
+
   getPlaylistTracks(id) {
     Spotify.getPlaylistTracks(this.state.token, id).then(tracks => {
       this.setState({results: tracks})
     });
+  }
+
+  handleCheckBox(e) {
+    console.log(e.target.checked);
+    console.log(e.target);
+
+    if (e.target.checked === true) {
+      let playlist = this.state.playlist;
+      const results = this.state.results;
+
+      playlist = playlist.concat(results);
+      this.setState({playlist: playlist});
+    }
   }
 
   componentWillMount() {
@@ -109,7 +134,7 @@ class App extends Component {
         <div className="App">
           <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} />
           <div className="App-playlist">
-            <PlaylistsResults userPlaylists={this.state.userPlaylists} getTracks={this.getPlaylistTracks} />
+            <PlaylistsResults refreshPlaylists={this.getPlaylists} userPlaylists={this.state.userPlaylists} getTracks={this.getPlaylistTracks} checkBox={this.handleCheckBox} />
             <SearchResults tracks={this.state.results} add={this.edit} />
             <Playlist tracks={this.state.playlist} remove={this.edit} save={this.handleSave} />
           </div>
