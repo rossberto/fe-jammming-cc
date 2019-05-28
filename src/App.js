@@ -98,15 +98,37 @@ class App extends Component {
   }
 
   handleCheckBox(e) {
-    console.log(e.target.checked);
-    console.log(e.target);
+    let playlistId = e.target.value;
+    let playlist = this.state.playlist;
+    console.log(playlistId);
 
     if (e.target.checked === true) {
-      let playlist = this.state.playlist;
-      const results = this.state.results;
+      const tracksToAdd = [];
+      Spotify.getPlaylistTracks(this.state.token, playlistId).then(tracks => {
+        tracks.forEach(track => {
+          let already = playlist.find(element => {
+            return element.id === track.id;
+          });
+          if (already === undefined) {
+            tracksToAdd.push(track)
+          }
+        });
+        playlist = playlist.concat(tracksToAdd);
+        this.setState({playlist: playlist});
+      });
+    } else {
+      Spotify.getPlaylistTracks(this.state.token, playlistId).then(tracks => {
+        console.log(tracks);
+        tracks.forEach(track => {
+          const trackIndex = playlist.findIndex(element => {
+            return element.id === track.id;
+          });
 
-      playlist = playlist.concat(results);
-      this.setState({playlist: playlist});
+          playlist.splice(trackIndex, 1);
+        });
+
+        this.setState({playlist: playlist});
+      });
     }
   }
 
