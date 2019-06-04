@@ -4,7 +4,6 @@ import './App.css';
 import {SearchBar} from './components/SearchBar/SearchBar';
 import {SearchResults} from './components/SearchResults/SearchResults';
 import {Playlist} from './components/Playlist/Playlist';
-import {PlaylistsList} from './components/PlaylistsList/PlaylistsList';
 import {PlaylistsResults} from './components/PlaylistsResults/PlaylistsResults';
 
 import {Spotify} from './util/Spotify';
@@ -72,12 +71,37 @@ class App extends Component {
   }
 
   handleSave(name) {
-    Spotify.getUserId(this.state.token).then(userId => {
-      Spotify.createPlaylist(name, this.state.token, userId).then(playlistId => {
-        Spotify.addToPlaylist(playlistId, this.state.token, this.state.playlist).then(
-          this.setState({playlist: []})
-        );
+    Spotify.getPlaylists(this.state.token).then(jsonResponse => {
+      const userPlaylists = jsonResponse.items;
+      const found = userPlaylists.find(element => {
+        return element.name === name;
       });
+
+      if (found === undefined) {
+        Spotify.getUserId(this.state.token).then(userId => {
+          Spotify.createPlaylist(name, this.state.token, userId).then(playlistId => {
+            Spotify.addToPlaylist(this.state.token, playlistId, this.state.playlist).then(
+              this.setState({playlist: []})
+            ).then(response => {
+              if (response.ok) {
+                alert('Playlist saved succesfuly!');
+              } else {
+                alert('Something went wrong!');
+              }
+            });
+          });
+        });
+      } else {
+        Spotify.replacePlaylistTracks(this.state.token, found.id, this.state.playlist).then(response => {
+          if (response.ok) {
+            alert('Playlist updated succesfuly!');
+            this.setState({playlist: []});
+          } else {
+            alert('Something went wrong!');
+          }
+
+        });
+      }
     });
   }
 
@@ -100,7 +124,6 @@ class App extends Component {
   handleCheckBox(e) {
     let playlistId = e.target.value;
     let playlist = this.state.playlist;
-    console.log(playlistId);
 
     if (e.target.checked === true) {
       const tracksToAdd = [];
@@ -118,7 +141,6 @@ class App extends Component {
       });
     } else {
       Spotify.getPlaylistTracks(this.state.token, playlistId).then(tracks => {
-        console.log(tracks);
         tracks.forEach(track => {
           const trackIndex = playlist.findIndex(element => {
             return element.id === track.id;

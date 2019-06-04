@@ -1,4 +1,4 @@
-const cors = 'https://cors-anywhere.herokuapp.com/';
+//const cors = 'https://cors-anywhere.herokuapp.com/';
 const clientId = '93051b381baf4825ae58bc059d5feec1';
 
 const scope = 'user-read-private user-read-email playlist-modify-public';
@@ -6,7 +6,7 @@ const redirectUri = 'http://localhost:3000/';
 
 const authUrl = 'https://accounts.spotify.com/authorize';
 const searchUrl = 'https://api.spotify.com/v1/search';
-const playlistsUrl = 'https://api.spotify.com/v1/playlists';
+//const playlistsUrl = 'https://api.spotify.com/v1/playlists';
 const userUrl = 'https://api.spotify.com/v1/me';
 
 export const Spotify = {
@@ -82,10 +82,10 @@ export const Spotify = {
     });
   },
 
-  addToPlaylist(playlistId, token, playlist) {
+  addToPlaylist(token, playlistId, playlist) {
     let urlToFetch = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
     urlToFetch += '?uris='
-    const tracks = playlist.map(track => {
+    playlist.forEach(track => {
       urlToFetch += `${track.uri},`;
     });
 
@@ -97,11 +97,7 @@ export const Spotify = {
       }
     }
 
-    return fetch(urlToFetch, headerToFetch).then(response => {
-      if (response.ok) {
-        alert('Playlist saved succesfuly!');
-      }
-    });
+    return fetch(urlToFetch, headerToFetch);
   },
 
   getPlaylists(token) {
@@ -148,6 +144,26 @@ export const Spotify = {
         }
       });
     })
+  },
+
+  replacePlaylistTracks(token, playlistId, playlist) {
+    let urlToFetch = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+    urlToFetch += '?uris=';
+    playlist.forEach(track => {
+      urlToFetch += `${track.uri},`;
+    });
+
+    const headerToFetch = {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return fetch(urlToFetch, headerToFetch).then(response => {
+      return response;
+    });
   }
 }
 
