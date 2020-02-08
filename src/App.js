@@ -183,7 +183,7 @@ class App extends Component {
 
     return (
       <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <h1>Spotify's <span className="highlight">Playlists</span> Manager</h1>
         <div className="App">
           <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} recommend={this.recommenderSpotify} />
           <div className="App-playlist">

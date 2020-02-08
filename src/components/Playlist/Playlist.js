@@ -38,7 +38,7 @@ export class Playlist extends React.Component {
       <div className="Playlist">
         <input onChange={this.handleChange} placeholder="Playlist Name" value={this.state.playlistName} />
         <TrackList type="playlist" tracks={this.props.tracks} updateList={this.handleUpdateList} />
-        <a onClick={this.handleClick} className="Playlist-save">SAVE TO SPOTIFY</a>
+        <a onClick={this.handleClick} className="updateButton">SAVE TO SPOTIFY</a>
       </div>
     );
   }

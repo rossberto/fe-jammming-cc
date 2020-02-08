@@ -17,7 +17,7 @@ export class SearchResults extends React.Component {
   render() {
     return (
       <div className="SearchResults">
-        <h2>Results</h2>
+        <h2>Search Results</h2>
         <TrackList type="results" tracks={this.props.tracks} updateList={this.handleUpdate} />
       </div>
     );

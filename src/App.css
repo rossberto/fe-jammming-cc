@@ -10,7 +10,7 @@ html {
 
 h1 {
   padding: .77rem 0;
-  background-color: #010c3f;
+  background-color: black;
   text-align: center;
   font-family: 'Poppins', sans-serif;
   font-size: 1.88rem;
@@ -18,7 +18,7 @@ h1 {
 }
 
 h1 .highlight {
-  color: #6c41ec;
+  color: #1DB954;
 }
 
 h2 {
@@ -29,9 +29,10 @@ h2 {
 .App {
   height: 100%;
   padding: 0 17% 10% 17%;
-  background-image: url('./background_photo_desktop.jpg');
-  background-size: cover;
-  background-position: center;
+  background-color: #1ed760ff;
+  background-image: url('./spotifylogos.gif');
+  background-size: contain;
+  background-position: top;
   background-repeat: no-repeat;
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
@@ -55,8 +56,8 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 6.94rem;
-  margin-bottom: 6.33rem;
+  padding-top: 30px;
+  margin-bottom: 40px;
 }
 
 .SearchBar input {
@@ -79,14 +80,14 @@ h2 {
   width: 8.11rem;
   padding: .77rem 0;
   border-radius: 54px;
-  background-color: #010c3f;
+  background-color: #000000cc;
   text-align: center;
   font-size: .833rem;
   transition: background-color .25s;
 }
 
 .SearchBar a:hover {
-  background-color: rgba(108, 65, 233, .7);
+  background-color: black;
 }
 
 .SearchResults {
@@ -94,7 +95,7 @@ h2 {
   height: 950px;
   overflow-y: scroll;
   padding: .88rem;
-  background-color: rgba(1, 12, 63, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0 4px 2px 2px #000000;
 }
 
@@ -103,7 +104,7 @@ h2 {
   height: 950px;
   overflow-y: scroll;
   padding: .88rem;
-  background-color: rgba(1, 12, 63, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0 4px 2px 2px #000000;
 }
 
@@ -127,7 +128,7 @@ h2 {
   width: 37%;
   max-height: 950px;
   padding: 2.27rem 1.16rem;
-  background-color: rgba(1, 12, 63, 0.7);
+  background-color: rgba(0,0,0, 0.7);
   box-shadow: 0 4px 2px 2px #000000;
 }
 
@@ -169,7 +170,6 @@ h2 {
 }
 
 .playlist-element {
-  background-color: rgba(1, 12, 63, 0.7);
   margin: 2px 2px;
 }
 
@@ -229,6 +229,19 @@ h2 {
 }
 
 .updateButton {
+  border-color: #1DB954;
+  border-width: 1px;
+  border-style: solid;
   width: 300px;
   justify-content: center;
+  display: inline-block;
+  cursor: pointer;
+  width: 8.11rem;
+  padding: .77rem 0;
+  margin: 10px auto;
+  border-radius: 54px;
+  background-color: #000000cc;
+  text-align: center;
+  font-size: .833rem;
+  transition: background-color .25s;
 }
