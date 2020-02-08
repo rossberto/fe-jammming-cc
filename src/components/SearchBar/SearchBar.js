@@ -9,6 +9,7 @@ export class SearchBar extends React.Component {
 
     this.handleTermChange = this.handleTermChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleRecommendation = this.handleRecommendation.bind(this);
   }
 
   handleTermChange(e) {
@@ -31,11 +32,21 @@ export class SearchBar extends React.Component {
     }
   }
 
+  handleRecommendation(e) {
+    e.preventDefault();
+    const token = this.props.auth.token;
+
+    this.props.recommend(token);
+  }
+
   render() {
     return (
       <form onSubmit={this.handleClick} className="SearchBar">
         <input onChange={this.handleTermChange} placeholder="Enter A Song, Album, or Artist" />
-        <a onClick={this.handleClick}>SEARCH</a>
+        <div style={{display: "inline-block"}}>
+          <a onClick={this.handleClick} style={{display: "inline-block", marginRight: "15px"}}>SEARCH</a>
+          <a onClick={this.handleRecommendation} style={{display: "inline-block", marginLeft: "15px"}}>RECOMMEND</a>
+        </div>
       </form>
     );
   }

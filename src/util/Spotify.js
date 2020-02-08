@@ -1,7 +1,7 @@
 //const cors = 'https://cors-anywhere.herokuapp.com/';
 const clientId = '93051b381baf4825ae58bc059d5feec1';
 
-const scope = 'user-read-private user-read-email playlist-modify-public';
+const scope = 'user-top-read'; // 'user-read-private user-read-email playlist-modify-public';
 const redirectUri = 'http://localhost:3000/';
 
 const authUrl = 'https://accounts.spotify.com/authorize';
@@ -164,13 +164,51 @@ export const Spotify = {
     return fetch(urlToFetch, headerToFetch).then(response => {
       return response;
     });
+  },
+
+  getRecommendedIds(token) {
+    //return new Promise(resolve => {
+    const headerToFetch = {
+      method: 'GET',
+      headers: {
+        //'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }
+
+      const spotifyUrl = 'https://api.spotify.com/v1/tracks';
+
+      return fetch(`http://rossberto.pythonanywhere.com/profile?token=${token}`, headerToFetch).then((response) => {
+        return response.json();
+      }).then(jsonResponse => {
+        return jsonResponse.ids;
+      });
+  },
+
+  getTracks(token, idsArr) {
+    const headerToFetch = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const ids = idsArr.toString();
+    return fetch(`https://api.spotify.com/v1/tracks/?ids=${ids}`, headerToFetch).then(response => {
+      return response.json();;
+    }).then(jsonResponse => {
+      return jsonResponse;
+    }).then(jsonResponse => {
+      return jsonResponse.tracks.map(item => {
+        return {
+          id: item.id,
+          name: item.name,
+          album: item.album.name,
+          artist: item.artists[0].name,
+          uri: item.uri
+        };
+      });
+    });
   }
 }
-
-/*
-id: item.id,
-name: item.name,
-album: item.album.name,
-artist: item.artists[0].name,
-uri: item.uri
-*/

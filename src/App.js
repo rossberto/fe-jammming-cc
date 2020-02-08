@@ -26,6 +26,7 @@ class App extends Component {
     this.getPlaylists = this.getPlaylists.bind(this);
     this.getPlaylistTracks = this.getPlaylistTracks.bind(this);
     this.handleCheckBox = this.handleCheckBox.bind(this);
+    this.recommenderSpotify = this.recommenderSpotify.bind(this);
   }
 
   searchSpotify(term, token) {
@@ -37,6 +38,14 @@ class App extends Component {
         this.setState({userPlaylists: jsonResponse.items});
       })
     );
+  }
+
+  recommenderSpotify(token) {
+    Spotify.getRecommendedIds(token).then(ids => {
+      Spotify.getTracks(token, ids).then(tracks => {
+        this.setState({playlist: tracks});
+      });
+    });
   }
 
   removeFromPlaylist(id) {
@@ -176,7 +185,7 @@ class App extends Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} />
+          <SearchBar auth={credentials} login={this.handleLogin} searchSpotify={this.searchSpotify} recommend={this.recommenderSpotify} />
           <div className="App-playlist">
             <PlaylistsResults refreshPlaylists={this.getPlaylists} userPlaylists={this.state.userPlaylists} getTracks={this.getPlaylistTracks} checkBox={this.handleCheckBox} />
             <SearchResults tracks={this.state.results} add={this.edit} />
