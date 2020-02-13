@@ -81,6 +81,9 @@ h2 {
   padding: .77rem 0;
   border-radius: 54px;
   background-color: #000000cc;
+  border-color: white;
+  border-width: 2px;
+  border-style: solid;
   text-align: center;
   font-size: .833rem;
   transition: background-color .25s;

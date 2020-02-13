@@ -26,10 +26,10 @@ export class Playlist extends React.Component {
   }
 
   handleClick() {
-    if (this.state.playlistName !== '') {
+    if (this.state.playlistName !== '' && this.props.tracks.length > 0) {
       this.props.save(this.state.playlistName);
     } else {
-      alert('Playlist name should not be empty.');
+      alert('Playlist name should not be empty and should have at least one song.');
     }
   }
 
